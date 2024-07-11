@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  tweet forming
+{% endblock %}
+
+{% block content %}
+  {% if form.instance.id %}
+    Edit tweet
+  {% else %}
+    Create tweet
+  {% endif %}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+  </form>
+  <a href="{% url 'tweet_list' %}">Back</a>
+{% endblock %}

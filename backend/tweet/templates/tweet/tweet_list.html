@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  tweet list
+{% endblock %}
+
+{% block content %}
+  <a href="{% url 'tweet_create' %}"><button>Create tweet</button></a>
+  <div class="container" style="display: grid; grid-template-columns: repeat(5, 1fr); width: 100%; margin-top: 5vh; gap: 10px;">
+    {% for tweet in tweets %}
+      <div class="container" style="border: 2px black solid;">
+        {% if tweet.photo %}
+          <img src=" {{ tweet.photo.url }} " style="width: 100%;" />
+        {% endif %}
+        {% if tweet.text %}
+          <h5 style="color: brown;">{{ tweet.user.username }}</h5>
+        {% endif %}
+        <h3 style="color: cadetblue;">{{ tweet.text }}</h3>
+        {% if tweet.user == user %}
+          <div>
+            <a href="{% url 'tweet_edit' tweet.id %}"><button>Edit</button></a>
+            <a href="{% url 'tweet_delete' tweet.id %}"><button>Delete</button></a>
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
