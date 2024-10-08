@@ -1,19 +1,31 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-  tweet forming
+  Tweet Forming
 {% endblock %}
 
 {% block content %}
-  {% if form.instance.id %}
-    Edit tweet
-  {% else %}
-    Create tweet
-  {% endif %}
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
-  </form>
-  <a href="{% url 'tweet_list' %}">Back</a>
+  <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="container bg-light p-5 rounded shadow-lg" style="max-width: 600px;">
+      <h2 class="text-center mb-4" style="color: black;">
+        {% if form.instance.id %}
+          Edit Tweet
+        {% else %}
+          Create Tweet
+        {% endif %}
+      </h2>
+
+      <!-- Form -->
+      <form method="post" enctype="multipart/form-data" style="color: black; font: bold;">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <div class="text-center mt-4 d-flex justify-content-around align-items-center">
+          <button type="submit" class="btn btn-success btn-lg">Submit</button>
+          <a href="{% url 'tweet_list' %}" class="btn btn-secondary btn-lg ml-3">Back</a>
+        </div>
+      </form>
+    </div>
+  </div>
 {% endblock %}
