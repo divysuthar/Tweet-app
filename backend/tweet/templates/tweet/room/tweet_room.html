@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  Tweet Room
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+          {% if room.instance.id %}
+            <h2>Edit room</h2>
+            {% else %}
+            <h2>Create room</h2>
+          {% endif %}
+        </div>
+        <div class="card-body">
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!-- Render form fields -->
+            {{ room.as_p }}
+
+            <!-- Submit Button -->
+            <div class="d-flex justify-content-between mt-4">
+              <button type="submit" class="btn btn-success btn-lg">Submit</button>
+              <a href="{% url 'tweet_list' %}" class="btn btn-secondary btn-lg">Back</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

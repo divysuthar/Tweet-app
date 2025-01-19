@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  Tweet List
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-5">
+    <!-- Header and Create Room Button -->
+    <div class="text-center mb-4">
+      <h1 class="mb-3">Tweet Rooms</h1>
+      <a href="{% url 'tweet_room' %}" class="btn btn-primary btn-lg">Create Room</a>
+    </div>
+
+    <!-- Rooms Grid -->
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      {% for room in rooms %}
+        <div class="col">
+          <div class="card h-100 shadow-sm">
+            <!-- Room Name -->
+            <div class="card-header bg-primary text-white">
+              <h5 class="card-title mb-0 text-truncate">{{ room.name }}</h5>
+            </div>
+            <!-- Room Description -->
+            <div class="card-body">
+              <p class="card-text">{{ room.description }}</p>
+            </div>
+            <!-- Edit and Delete Buttons -->
+            {% if room.user == user %}
+              <div class="card-footer d-flex justify-content-between">
+                <a href="{% url 'room_edit' room.id %}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="{% url 'room_delete' room.id %}" class="btn btn-danger btn-sm">Delete</a>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- No Rooms Message -->
+    {% if not rooms %}
+      <div class="text-center mt-5">
+        <p class="text-muted">No rooms available. Create a new room to get started!</p>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}
