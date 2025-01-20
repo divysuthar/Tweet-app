@@ -72,8 +72,9 @@ def register(request):
 
 # Room creating
 
+
 @login_required
-def tweet_room(request):
+def room_create(request):
     if request.method == "POST":
         form = RoomForm(request.POST)
         if form.is_valid():
@@ -83,11 +84,11 @@ def tweet_room(request):
             return redirect("tweet_list")
     else:
         room = RoomForm()
-    return render(request, "tweet/room/tweet_room.html", {"room": room})
+    return render(request, "tweet/room/room_create.html", {"room": room})
 
 
 def room_list(request):
-    rooms = Tweet_room.objects.all().order_by("name")
+    rooms = Tweet_room.objects.all().order_by("-updated_at")
     print(rooms)
     return render(request, "tweet/room/room_list.html", {"rooms": rooms})
 
@@ -97,7 +98,7 @@ def room_edit(request, id):
     room_obj = get_object_or_404(Tweet_room, pk=id, user=request.user)
     # print(room_obj)
     if request.method == "POST":
-        form = tweetForm(request.POST, request.FILES, instance=room_obj)
+        form = RoomForm(request.POST, request.FILES, instance=room_obj)
         print(form)
         if form.is_valid():
             tweet = form.save(commit=False)
@@ -105,7 +106,7 @@ def room_edit(request, id):
             tweet.save()
             return redirect("room_list")
     else:
-        form = tweetForm(instance=room_obj)
+        form = RoomForm(instance=room_obj)
 
     return render(request, "tweet/room/tweet_room.html", {"room": form})
 
@@ -117,3 +118,10 @@ def room_delete(request, id):
         room.delete()
         return redirect("room_list")
     return render(request, "tweet/room/room_delete.html", {"room": room})
+
+
+@login_required
+def tweets_in_room(request, id):
+    room = get_object_or_404(Tweet_room, pk=id)
+    tweets = Tweet.objects.filter(room = room)
+    return render(request, 'tweet/room_tweet/room_tweets.html', {'tweets':tweets, 'room':room})

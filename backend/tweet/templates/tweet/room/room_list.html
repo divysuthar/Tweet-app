@@ -9,7 +9,7 @@
     <!-- Header and Create Room Button -->
     <div class="text-center mb-4">
       <h1 class="mb-3">Tweet Rooms</h1>
-      <a href="{% url 'tweet_room' %}" class="btn btn-primary btn-lg">Create Room</a>
+      <a href="{% url 'room_create' %}" class="btn btn-primary btn-lg">Create Room</a>
     </div>
 
     <!-- Rooms Grid -->
@@ -18,8 +18,12 @@
         <div class="col">
           <div class="card h-100 shadow-sm">
             <!-- Room Name -->
-            <div class="card-header bg-primary text-white">
-              <h5 class="card-title mb-0 text-truncate">{{ room.name }}</h5>
+            <div class="card">
+              <a href="{% url 'tweets_in_room' room.id %}" class="text-decoration-none">
+                <div class="card-header bg-primary text-white">
+                  <h5 class="card-title mb-0 text-truncate">{{ room.name }}</h5>
+                </div>
+              </a>
             </div>
             <!-- Room Description -->
             <div class="card-body">
