@@ -123,5 +123,41 @@ def room_delete(request, id):
 @login_required
 def tweets_in_room(request, id):
     room = get_object_or_404(Tweet_room, pk=id)
-    tweets = Tweet.objects.filter(room = room)
-    return render(request, 'tweet/room_tweet/room_tweets.html', {'tweets':tweets, 'room':room})
+    tweets = Tweet.objects.filter(room=room)
+    return render(
+        request, "tweet/room_tweet/room_tweets.html", {"tweets": tweets, "room": room}
+    )
+
+
+import torch
+from transformers import BertTokenizer, BertForSequenceClassification
+
+
+def check(request):
+    Answer = ""
+    if request.method == "POST":
+        text = request.POST.get("prompt", "")
+        print(text)
+        if text:
+            tokenizer = BertTokenizer.from_pretrained(
+                "shahxeebhassan/bert_base_ai_content_detector"
+            )
+            model = BertForSequenceClassification.from_pretrained(
+                "shahxeebhassan/bert_base_ai_content_detector"
+            )
+            inputs = tokenizer(text, return_tensors="pt")
+
+            with torch.no_grad():
+                outputs = model(**inputs)
+                logits = outputs.logits
+
+            probabilities = torch.softmax(logits, dim=1).cpu().numpy()
+
+            predicted_label = probabilities.argmax(axis=1)
+            predicted = predicted_label[0]
+            if predicted == 0:
+                Answer = "This text is not AI content"
+            else:
+                Answer = "This text is AI content"
+            print(f"Predicted label for the input text: {predicted_label[0]}")
+    return render(request, "tweet/llm/text.html", {"Answer": Answer})

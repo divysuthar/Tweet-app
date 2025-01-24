@@ -12,4 +12,5 @@ urlpatterns = [
     path("edit_room/<int:id>/", views.room_edit, name="room_edit"), # edit
     path("delete_room/<int:id>/", views.room_delete, name="room_delete"), # delete
     path("tweets_in_room/<int:id>/", views.tweets_in_room, name="tweets_in_room"), # delete
+    path("llm/", views.check, name="llm"), # delete
 ]

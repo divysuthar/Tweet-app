@@ -1,6 +1,6 @@
 FROM python:3
 
-WORKDIR /app
+WORKDIR /
 
 COPY requirements.txt requirements.txt
 
@@ -10,6 +10,6 @@ COPY . .
 
 EXPOSE 8000
 
-WORKDIR /app/backend
+WORKDIR /backend
 
 CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver" ]
