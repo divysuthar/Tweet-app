@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block content %}
-  <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-    <div class="container bg-light p-5 rounded shadow-lg" style="max-width: 600px;">
-      <h2 class="text-center mb-4" style="color: black;">
+  <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh; background-color: #e0f7fa;">
+    <div class="container bg-white p-5 rounded shadow-lg" style="max-width: 600px; border: 2px solid #0288d1;">
+      <h2 class="text-center mb-4" style="color: #01579b;">
         {% if form.instance.id %}
           Edit Tweet
         {% else %}
@@ -16,14 +16,14 @@
       </h2>
 
       <!-- Form -->
-      <form method="post" enctype="multipart/form-data" style="color: black; font: bold;">
+      <form method="post" enctype="multipart/form-data" style="color: #01579b; font-weight: bold;">
         {% csrf_token %}
 
         {{ form.as_p }}
 
         <div class="text-center mt-4 d-flex justify-content-around align-items-center">
-          <button type="submit" class="btn btn-success btn-lg">Submit</button>
-          <a href="{% url 'tweet_list' %}" class="btn btn-secondary btn-lg ml-3">Back</a>
+          <button type="submit" class="btn btn-primary btn-lg" style="background-color: #0288d1; border-color: #0277bd;">Submit</button>
+          <a href="{% url 'tweet_list' %}" class="btn btn-secondary btn-lg ml-3" style="background-color: #81d4fa; border-color: #4fc3f7; color: #01579b;">Back</a>
         </div>
       </form>
     </div>

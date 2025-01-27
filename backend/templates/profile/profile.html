@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  Profile
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="card mx-auto shadow" style="max-width: 600px;">
+    <div class="card-body text-center">
+      <!-- Profile Photo -->
+      {% if user.profile.profile_photo %}
+      <img 
+        src="{{ user.profile.profile_photo.url }}" 
+        alt="{{ user.username }}'s Profile Photo" 
+        class="rounded-circle mb-3" 
+        style="width: 150px; height: 150px; object-fit: cover;"
+      />
+      {% else %}
+      <img 
+        src="{% static 'default_profile_photo.jpg' %}" 
+        alt="Default Profile Photo" 
+        class="rounded-circle mb-3" 
+        style="width: 150px; height: 150px; object-fit: cover;"
+      />
+      {% endif %}
+
+      <!-- Username -->
+      <h3 class="card-title mb-1">{{ user.username }}</h3>
+
+      <!-- Bio -->
+      <p class="text-muted">{{ user.profile.bio|default:"No bio available" }}</p>
+
+      <!-- Account Created At -->
+      <p class="text-muted">Member since: {{ user.profile.created_at|date:"F d, Y" }}</p>
+
+      <!-- Buttons -->
+      <div class="d-flex justify-content-center mt-4">
+        <a href="{% url 'profile_edit' %}" class="btn btn-primary mx-2">Edit Profile</a>
+        <a href="{% url 'logout' %}" class="btn btn-danger mx-2">Logout</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
